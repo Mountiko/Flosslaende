@@ -1,0 +1,95 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | foam-extend: Open Source CFD                    |
+|  \\    /   O peration     | Version:     3.1                                |
+|   \\  /    A nd           | Web:         http://www.extend-project.de       |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build    : 3.1-1dd681f6e943
+Exec     : shallowFoam -parallel
+Date     : Jan 29 2019
+Time     : 16:54:39
+Host     : hyd35
+PID      : 9706
+CtrlDict : /opt/foam/foam-extend-3.1/etc/controlDict
+Case     : /students/nvornehm/foam/student13-3.1/run/2D-Wave/at2
+nProcs   : 12
+Slaves : 
+11
+(
+hyd35.9707
+hyd35.9708
+hyd35.9709
+hyd35.9710
+hyd35.9711
+hyd35.9712
+hyd35.9713
+hyd35.9714
+hyd35.9715
+hyd35.9716
+hyd35.9717
+)
+
+Pstream initialized with:
+    floatTransfer     : 0
+    nProcsSimpleSum   : 0
+    commsType         : blocking
+SigFpe   : Enabling floating point exception trapping (FOAM_SIGFPE).
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Create mesh for time = 0
+
+// using new solver syntax:
+p
+{
+    solver          PCG;
+    preconditioner  DIC;
+    tolerance       1e-06;
+    relTol          0;
+}
+
+// using new solver syntax:
+H
+{
+    solver          PBiCG;
+    preconditioner  DILU;
+    tolerance       1e-07 0;
+    relTol          0;
+}
+
+// using new solver syntax:
+HU
+{
+    solver          PBiCG;
+    preconditioner  DILU;
+    tolerance       1e-05;
+    relTol          0;
+}
+
+Reading transportProperties
+
+Reading field H
+
+Flow depth
+
+Reading field S
+
+Bottom elevation
+
+Reading field kst
+
+Strickler value
+
+Reading field HU
+
+Creating field U
+
+Creating field phi
+
+Creating field alpha
+
+--------------------------------------------------------------------------
+mpirun noticed that process rank 11 with PID 9717 on node hyd35 exited on signal 8 (Floating point exception).
+--------------------------------------------------------------------------

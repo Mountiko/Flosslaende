@@ -1,0 +1,39 @@
+FoamFile
+{
+    version         2.0;
+    format          ascii;
+
+    root            "/.automount/werner/Werner/bgschaid/bgschaid-foamStuff/DepositionTests";
+    case            "neutralTest";
+    instance        "system";
+    local           "";
+
+    class           dictionary;
+    object          funkySetFieldsDict;
+}
+
+expressions
+(
+	setH
+	{
+		field 		H;
+		create 		false;     
+                expression 	"(pos().x <= 4.1) ? (1.23) : ((pos().x > 4.1) && (pos().x < 11) ? (1.23 - (pos().x - 4.1) * 0.09) : ((pos().x >= 11) ? (0.65)))";
+		condition	"true";
+		keepPatches	true;
+	}
+	setS
+	{
+		field 		S;
+		create 		false;     
+                expression 	"";
+		condition	"true";
+		keepPatches	true;
+	}
+);
+
+
+
+
+
+

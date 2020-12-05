@@ -1,0 +1,17 @@
+line1
+{
+type uniform;
+axis distance;
+start (
+0
+0.05
+0.5
+);
+end (
+24.1
+0.05
+0.5
+);
+nPoints 4820;
+}
+

@@ -1,0 +1,201 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | foam-extend: Open Source CFD                    |
+|  \\    /   O peration     | Version:     3.1                                |
+|   \\  /    A nd           | Web:         http://www.extend-project.de       |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      snappyHexMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// Which of the steps to run
+
+castellatedMesh true;
+snap            true;
+addLayers       false;
+
+
+geometry
+{
+    riverSlopeB.stl
+    {
+        type triSurfaceMesh;
+	name riverSlope;
+    }
+
+    refinementBox
+    {
+    type searchableBox;
+        //min (0 0 0);
+	//max (24.1 9 2);
+	min (10.8 0 0);
+	max (11 9 0.5);
+    }
+};
+
+
+castellatedMeshControls
+{
+
+    maxLocalCells 1000000;
+  
+    maxGlobalCells 5000000;
+
+    minRefinementCells 1;
+
+    nCellsBetweenLevels 2;
+
+   features
+    (
+         {
+           file    "riverSlope.eMesh";
+            level   3;
+        }
+     );
+
+    refinementSurfaces
+    {
+        riverSlope
+        {
+              level (2 2);
+        }
+    }
+
+    resolveFeatureAngle 90;	// Resolve sharp angles
+
+    refinementRegions
+    {
+        refinementBox
+        {
+            mode distance; 
+       	    levels ((0 2));
+        }
+    }
+
+    locationInMesh (10 1.015 1);
+
+    allowFreeStandingZoneFaces false;
+}
+
+
+
+snapControls
+{
+   
+    nSmoothPatch 5;
+
+    tolerance 4.0;
+
+    nSolveIter 10;
+
+    nRelaxIter 5;
+
+    nFeatureSnapIter 10;
+
+    implicitFeatureSnap true;
+
+    explicitFeatureSnap true;
+
+    multiRegionFeatureSnap false;
+    
+}
+
+
+
+addLayersControls
+{
+    
+    relativeSizes true;
+
+    layers
+    {
+        riverSlope_riverSlope
+        {
+            nSurfaceLayers 2;
+        }
+    }
+
+    expansionRatio 1.0;
+
+    finalLayerThickness 0.8;
+
+    minThickness 0.5;
+
+    nGrow 1;
+
+
+    featureAngle 100;
+
+    slipFeatureAngle 30;
+
+    nRelaxIter 3;
+
+    nSmoothSurfaceNormals 1;
+
+    nSmoothNormals 3;
+
+    nSmoothThickness 10;
+
+    maxFaceThicknessRatio 0.5;
+
+    maxThicknessToMedialRatio 0.3;
+
+    minMedianAxisAngle 90;
+
+    nBufferCellsNoExtrude 0;
+
+    nLayerIter 50;
+}
+
+
+meshQualityControls
+{
+    maxNonOrtho 65;
+
+    maxBoundarySkewness 20;
+
+    maxInternalSkewness 4;
+
+    maxConcave 80;
+
+    minVol 1e-13;
+
+    minTetVol 1e-20;
+
+    minArea -1;
+
+    minTwist 0.05;
+
+    minDeterminant 0.001;
+
+    minFaceWeight 0.05;
+
+    minVolRatio 0.01;
+
+    minTriangleTwist -1;
+
+    nSmoothScale 4;
+
+    errorReduction 0.75;
+}
+
+// Advanced
+
+// Flags for optional output
+// 0 : only write final meshes
+// 1 : write intermediate meshes
+// 2 : write volScalarField with cellLevel for postprocessing
+// 4 : write current intersections as .obj files
+debug 0;
+
+// Merge tolerance. Is fraction of overall bounding box of initial mesh.
+// Note: the write tolerance needs to be higher than this.
+mergeTolerance 1E-6;
+
+// ************************************************************************* //

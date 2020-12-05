@@ -1,0 +1,44 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  1.7.1                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+inlet 
+{
+    field alpha1;
+    expressions
+    (
+	{
+	        target 		value;
+        	patchName 	inlet;
+                expression 	"pos().z < 1.5012 ? 1 : 0";
+	}
+    );
+}
+
+inlet
+{
+    field U;
+    expressions
+    (
+	{
+		target 		value;
+		patchName	inlet;
+		expression	"alpha1 == 1 ? vector(1.1295,0,0) : vector(0,0,0)";
+	}
+    );
+} 
+
+// ************************************************************************* //
